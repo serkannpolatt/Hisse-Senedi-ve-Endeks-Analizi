@@ -141,56 +141,58 @@ def Endeks_Analiz(Endeks):
 
 
 
+import streamlit as st
 
-base="light"
-
+# Ensure that set_page_config is called only once and as the first Streamlit command
 st.set_page_config(
     page_title="Hisse Sinyalleri",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-st.set_page_config(
-    page_title="Aylara ve Çeyreklere Göre Getiri",
-    layout="wide",
-    initial_sidebar_state="expanded")
-with st.sidebar:
-    Secim=Endeksler+Hisseler
-    Endeks_Girdi = st.selectbox('Seçim',Secim)
-
-Endeks_Ozet,Endeks_Ozet_Ceyrek=Endeks_Analiz(Endeks_Girdi)
-
+# Define a function to highlight cooling values
 def cooling_highlight(val):
-    color = '#ff3300' if val<0 else '#00ff00'
+    color = '#ff3300' if val < 0 else '#00ff00'
     return f'background-color: {color}'
 
-st.title('Aylık Endeks: '+ Endeks_Girdi)
+# Sidebar selection
+with st.sidebar:
+    Secim = Endeksler + Hisseler
+    Endeks_Girdi = st.selectbox('Seçim', Secim)
 
-st.dataframe(Endeks_Ozet[:-3].style.apply(lambda x: [cooling_highlight(val) for val in x], 
-                                          subset=['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık']),
-                                          height=600,
-                                          use_container_width=True)
+# Perform analysis on the selected index
+Endeks_Ozet, Endeks_Ozet_Ceyrek = Endeks_Analiz(Endeks_Girdi)
 
+# Display the monthly index data
+st.title('Aylık Endeks: ' + Endeks_Girdi)
+st.dataframe(Endeks_Ozet[:-3].style.apply(
+    lambda x: [cooling_highlight(val) for val in x],
+    subset=['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık']
+), height=600, use_container_width=True)
+
+# Display monthly averages
 st.header('Aylık Ortalamalar')
-
 Sapmalar = Endeks_Ozet.tail(3).drop(['Yıllar'], axis=1)
 Sapmalar = Sapmalar.head(2)
 Ortalama = Sapmalar.head(1)
-st.dataframe(Sapmalar.style.apply(lambda x: [cooling_highlight(val) for val in x], 
-                                   subset=['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık']),
-                                   use_container_width=True)
+st.dataframe(Sapmalar.style.apply(
+    lambda x: [cooling_highlight(val) for val in x],
+    subset=['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık']
+), use_container_width=True)
 
-st.title('Çeyreklik Endeks: '+ Endeks_Girdi)
-st.dataframe(Endeks_Ozet_Ceyrek[:-3].style.apply(lambda x: [cooling_highlight(val) for val in x], 
-                                                  subset=['Q1','Q2','Q3','Q4']),
-                                                  height=600,
-                                                  use_container_width=True)
+# Display the quarterly index data
+st.title('Çeyreklik Endeks: ' + Endeks_Girdi)
+st.dataframe(Endeks_Ozet_Ceyrek[:-3].style.apply(
+    lambda x: [cooling_highlight(val) for val in x],
+    subset=['Q1', 'Q2', 'Q3', 'Q4']
+), height=600, use_container_width=True)
 
+# Display quarterly averages
 st.header('Çeyreklik Ortalamalar')
-
 Sapmalar_2 = Endeks_Ozet_Ceyrek.tail(3).drop(['Yıllar'], axis=1)
 Sapmalar_2 = Sapmalar_2.head(2)
 Ortalama_2 = Sapmalar_2.head(1)
-st.dataframe(Sapmalar_2.style.apply(lambda x: [cooling_highlight(val) for val in x], 
-                                     subset=['Q1','Q2','Q3','Q4']),
-                                     use_container_width=True)
+st.dataframe(Sapmalar_2.style.apply(
+    lambda x: [cooling_highlight(val) for val in x],
+    subset=['Q1', 'Q2', 'Q3', 'Q4']
+), use_container_width=True)
