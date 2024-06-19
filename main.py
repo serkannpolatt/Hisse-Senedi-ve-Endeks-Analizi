@@ -3,14 +3,6 @@ import pandas as pd
 import numpy as np
 import streamlit as st
 
-
-base="light"
-
-st.set_page_config(
-    page_title="Hisse Sinyalleri",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
 #XBANK	#BIST BANKA
 #XBLSM	#BIST BİLİŞİM
 #XELKT	#BIST ELEKTRİK
@@ -141,6 +133,16 @@ def Endeks_Analiz(Endeks):
 
     return Alt_Endeks_Ozet, Alt_Endeks_Ozet_2
 
+
+
+
+base="light"
+
+st.set_page_config(
+    page_title="Hisse Sinyalleri",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
 st.set_page_config(
     page_title="Aylara ve Çeyreklere Göre Getiri",
