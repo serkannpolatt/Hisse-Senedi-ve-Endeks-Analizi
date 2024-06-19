@@ -2,7 +2,13 @@ from tvDatafeed import TvDatafeed, Interval
 import pandas as pd
 import numpy as np
 import streamlit as st
-
+import numpy as np
+import pandas as pd
+import pandas_ta as ta
+from tvDatafeed import TvDatafeed, Interval
+import streamlit as st
+import ssl
+from urllib import request
 #XBANK	#BIST BANKA
 #XBLSM	#BIST BİLİŞİM
 #XELKT	#BIST ELEKTRİK
