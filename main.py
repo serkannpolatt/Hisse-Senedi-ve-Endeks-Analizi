@@ -1,8 +1,18 @@
-from tvDatafeed import TvDatafeed, Interval
-import pandas as pd
 import numpy as np
+import pandas as pd
+import pandas_ta as ta
+from tvDatafeed import TvDatafeed, Interval
 import streamlit as st
+import ssl
+from urllib import request
 
+base="light"
+
+st.set_page_config(
+    page_title="Hisse Sinyalleri",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 #XBANK	#BIST BANKA
 #XBLSM	#BIST BİLİŞİM
 #XELKT	#BIST ELEKTRİK
